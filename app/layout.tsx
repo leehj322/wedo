@@ -25,8 +25,6 @@ export default function RootLayout({
       <body className={`${pretendard.variable} font-pretendard`}>
         <Providers>{children}</Providers>
       </body>
-      <label>라벨</label>
-      <input type="button" />
     </html>
   );
 }
