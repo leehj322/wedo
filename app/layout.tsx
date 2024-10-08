@@ -25,6 +25,7 @@ export default function RootLayout({
       <body className={`${pretendard.variable} font-pretendard`}>
         <Providers>{children}</Providers>
       </body>
+      {123}
     </html>
   );
 }
