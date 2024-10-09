@@ -35,7 +35,8 @@
     "jsx-a11y/label-has-associated-control": [
       2,
       {
-        "some": ["nesting", "id"]
+        "some": ["nesting", "id"],
+        "labelAttributes": ["htmlFor"]
       }
     ],
     "no-console": "off",
