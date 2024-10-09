@@ -1,3 +1,11 @@
+---
+name: 논의 이슈
+about: 논의 사항에 대한 템플릿
+title: "[discussion] [기능] [명령어]"
+labels: ""
+assignees: ""
+---
+
 ## 주제
 
 - 논의 주제에 대해 간략하게 설명해주세요
