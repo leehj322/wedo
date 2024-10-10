@@ -1,7 +1,7 @@
 ---
-name: 기본 이슈 템플릿
-about: 기본 이슈 템플릿
-title: "[대주제] [기능] [명령어]"
+name: todo
+about: github project와 연동할 todo를 작성하는 이슈 템플릿
+title: "Title"
 labels: ""
 assignees: ""
 ---
