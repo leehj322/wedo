@@ -2,7 +2,7 @@
 name: bug issue
 about: bug나 qa 관련된 이슈 템플릿
 title: "🐛 버그: (버그 간단 설명)"
-labels: "discussion"
+labels: "bug"
 assignees: "gjrefa9139, hvrain, kjh9852, leehj322"
 ---
 
