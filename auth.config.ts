@@ -9,7 +9,6 @@ import type { NextAuthConfig } from "next-auth";
 async function refreshAccessToken(token: JWT) {
   try {
     const { accessToken } = await postRefreshAccessToken(token.refreshToken!);
-
     return {
       ...token,
       accessToken,

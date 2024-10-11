@@ -10,18 +10,12 @@ export default function ClientPage() {
   const { data } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
-      const res = await fetchExtendedClient("/user", {
-        headers: {
-          Authorization: `Bearer ${session.data?.accessToken}`,
-        },
-      });
+      const res = await fetchExtendedClient("/user");
       const json = await res.json();
       return json;
     },
     enabled: !!session.data?.accessToken,
     refetchInterval: 0,
   });
-  // eslint-disable-next-line no-console
-  console.log({ data });
-  return <div />;
+  return <div>{JSON.stringify(data)}</div>;
 }

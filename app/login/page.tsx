@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
 
 import { signIn } from "@/auth";
@@ -7,9 +8,18 @@ export default async function LoginPage() {
   async function postSignIn(formData: FormData) {
     "use server";
 
+    let shouldRedirect = false;
     try {
-      await signIn("credentials", formData);
+      const email = formData.get("email");
+      const password = formData.get("password");
+      await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+      shouldRedirect = true;
     } catch (error) {
+      console.log({ error });
       if (error instanceof AuthError) {
         switch (error.type) {
           case "CredentialsSignin":
@@ -22,6 +32,7 @@ export default async function LoginPage() {
       }
       console.log("unknown");
     }
+    if (shouldRedirect) redirect("/");
   }
 
   return (

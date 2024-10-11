@@ -6,10 +6,5 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
-  "cSpell.words": [
-		"Dtos",
-		"signin",
-		"svgr",
-		"zustand"
-	]
+  "cSpell.words": ["Dtos", "signin", "svgr", "zustand"]
 }
