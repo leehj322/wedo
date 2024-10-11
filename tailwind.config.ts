@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import type { PluginAPI } from "tailwindcss/types/config";
 
 const config: Config = {
   darkMode: ["class"],
@@ -89,6 +90,11 @@ const config: Config = {
           secondary: "#F9F9F9",
           beige: "#FED9B7",
         },
+        button: {
+          default: "#EDB372",
+          hover: "#FFAE67",
+          active: "#DC923E",
+        },
         inactive: "#94A3B8",
         hover: "#059669",
         pressed: "#047857",
@@ -129,6 +135,28 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    ({ matchComponents, theme }: PluginAPI) => {
+      const fontSizeKeys = Object.keys(theme("fontSize"));
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const matchComponentsObject: any = {};
+
+      fontSizeKeys.forEach((Key) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        matchComponentsObject[`pretendard-${Key}`] = (value: any) => ({
+          fontFamily: theme("fontFamily.pretendard"),
+          fontSize: theme(`fontSize.${Key}[0]`),
+          lineHeight: theme(`fontSize.${Key}[1]`),
+          fontWeight: value,
+        });
+      });
+
+      matchComponents(matchComponentsObject, {
+        values: theme("fontWeight"),
+      });
+    },
+  ],
 };
 export default config;
