@@ -39,6 +39,10 @@ const config: Config = {
       xs: ["12px", "14px"],
     },
     extend: {
+      screens: {
+        tab: "744px",
+        pc: "1200px",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -145,8 +149,7 @@ const config: Config = {
 
       fontSizeKeys.forEach((Key) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        matchComponentsObject[`pretendard-${Key}`] = (value: any) => ({
-          fontFamily: theme("fontFamily.pretendard"),
+        matchComponentsObject[Key] = (value: any) => ({
           fontSize: theme(`fontSize.${Key}[0]`),
           lineHeight: theme(`fontSize.${Key}[1]`),
           fontWeight: value,
