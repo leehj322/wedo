@@ -34,6 +34,9 @@ export default function useDeviceType() {
       setIsValid(true);
     }
 
+    // 최초에 handleResize를 실행하지 않으면 모든 값이 false가 되어 정상 동작하지 않음
+    handleResize();
+
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
