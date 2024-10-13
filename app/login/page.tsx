@@ -31,6 +31,7 @@ export default async function LoginPage() {
         }
       }
       console.log("unknown");
+      return;
     }
     if (shouldRedirect) redirect("/");
   }
