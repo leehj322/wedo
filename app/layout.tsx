@@ -1,4 +1,6 @@
 import localFont from "next/font/local";
+import { Session } from "next-auth";
+import { SessionProvider } from "next-auth/react";
 
 import "@/styles/globals.css";
 import Providers from "./providers";
@@ -19,13 +21,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  params: { session },
 }: Readonly<{
   children: React.ReactNode;
+  params: { session: Session };
 }>) {
   return (
     <html lang="ko">
       <body className={`${pretendard.variable} font-pretendard`}>
-        <Providers>{children}</Providers>
+        <SessionProvider session={session}>
+          <Providers>{children}</Providers>
+        </SessionProvider>
       </body>
     </html>
   );
