@@ -3,6 +3,8 @@ import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 
 import "@/styles/globals.css";
+import { Toaster } from "@/components/@common/toast/Toaster";
+
 import Providers from "./providers";
 
 import type { Metadata } from "next";
@@ -30,7 +32,10 @@ export default function RootLayout({
     <html lang="ko">
       <body className={`${pretendard.variable} font-pretendard`}>
         <SessionProvider session={session}>
-          <Providers>{children}</Providers>
+          <Providers>
+            {children}
+            <Toaster />
+          </Providers>
         </SessionProvider>
       </body>
     </html>
