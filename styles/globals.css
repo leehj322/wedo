@@ -87,3 +87,20 @@ input[type="radio"] {
     --radius: 0.5rem;
   }
 }
+
+::-webkit-scrollbar {
+  width: 17px;
+  height: 17px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a8a8a8;
+  background-clip: padding-box;
+  border: 5px solid #00000000;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  background-clip: padding-box;
+}
