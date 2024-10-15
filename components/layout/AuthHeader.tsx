@@ -10,6 +10,7 @@ export default async function AuthHeader() {
   return (
     <>
       <GroupsResponsive />
+
       <div className="flex grow items-center justify-end gap-[10px] tab:grow-0">
         <Avatar className="flex h-[30px] w-[30px] items-center justify-center bg-[#EDEDED]">
           <AvatarImage src={user?.image} alt="user avatar" />
