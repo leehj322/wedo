@@ -1,3 +1,4 @@
+import { getSession } from "next-auth/react";
 import returnFetch, { FetchArgs } from "return-fetch";
 
 import { auth } from "@/auth";
@@ -15,7 +16,12 @@ const fetchExtended = returnFetch({
         const { pathname } = url;
         url.pathname = `/8-7${pathname}`;
       }
-      const session = await auth();
+      let session;
+      if (typeof window !== "undefined") {
+        session = await getSession();
+      } else {
+        session = await auth();
+      }
       const accessToken = session?.accessToken;
 
       if (accessToken) {
