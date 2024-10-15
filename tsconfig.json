@@ -18,7 +18,10 @@
       }
     ],
     "paths": {
+      "@/layout/*": ["./components/layout/*"],
+      "@/ui/*": ["./components/ui/*"],
       "@/apis/*": ["./apis/*"],
+      "@/components/*": ["./components/*"],
       "@/*": ["./*"]
     }
   },
