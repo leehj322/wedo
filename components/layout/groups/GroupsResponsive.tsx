@@ -16,11 +16,11 @@ export default function GroupsResponsive() {
       <Link href="/">
         <Image width={65} height={32} src={Logo} alt="로고" />
       </Link>
-      <div className="hidden items-center gap-4 tab:flex">
+      <div className="lg-medium hidden items-center gap-4 tab:flex">
         <NavigationMenuGroups />
-        <span>
-          <Link href="/boards">자유게시판</Link>
-        </span>
+        <Link className="p-2 hover:bg-primary-light" href="/boards">
+          자유게시판
+        </Link>
       </div>
     </nav>
   );
