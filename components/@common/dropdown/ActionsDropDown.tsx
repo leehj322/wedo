@@ -6,7 +6,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../../ui/DropDown";
+} from "@/ui/dropdown";
 
 interface ActionsDropDownProps {
   children: ReactNode;
