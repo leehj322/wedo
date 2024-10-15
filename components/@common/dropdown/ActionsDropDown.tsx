@@ -14,7 +14,7 @@ interface ActionsDropDownProps {
   onDeleteHandler: () => void;
 }
 
-export function ActionsDropDown({
+export default function ActionsDropDown({
   children,
   onEditHandler,
   onDeleteHandler,

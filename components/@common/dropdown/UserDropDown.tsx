@@ -15,7 +15,10 @@ interface MyMenuDropDown {
   onLogoutHandler: () => void;
 }
 
-export function UserDropDown({ children, onLogoutHandler }: MyMenuDropDown) {
+export default function UserDropDown({
+  children,
+  onLogoutHandler,
+}: MyMenuDropDown) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
