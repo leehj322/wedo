@@ -10,9 +10,9 @@ const Burger = (props: SVGProps<SVGSVGElement>) => {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <rect x="6" y="12" width="32" height="2" rx="1" fill="currentColor" />
-      <rect x="6" y="22" width="32" height="2" rx="1" fill="currentColor" />
-      <rect x="6" y="32" width="32" height="2" rx="1" fill="currentColor" />
+      <rect x="9" y="12" width="32" height="2" rx="1" fill="currentColor" />
+      <rect x="9" y="22" width="32" height="2" rx="1" fill="currentColor" />
+      <rect x="9" y="32" width="32" height="2" rx="1" fill="currentColor" />
     </svg>
   );
 };

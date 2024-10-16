@@ -26,8 +26,11 @@ export default function SheetGroups() {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger>
-        <Burger className="p-2 hover:bg-primary-light" color="gray" />
+      <SheetTrigger className="flex items-center">
+        <Burger
+          className="rounded-xl p-2 hover:bg-primary-light"
+          color="gray"
+        />
       </SheetTrigger>
       <SheetContent side="left" className="w-1/2 px-2">
         <SheetHeader className="pl-4">
@@ -62,7 +65,7 @@ export default function SheetGroups() {
             className={cn(
               navigationMenuTriggerStyle(),
               "2xl-medium m-0 flex h-full w-full justify-start gap-3 p-2 hover:bg-brand-secondary-light",
-              teamId.includes("boards") && "bg-brand-header",
+              teamId?.includes("boards") && "bg-brand-header",
             )}
           >
             <div className="h-8 w-8" />
