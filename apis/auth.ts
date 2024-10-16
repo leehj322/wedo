@@ -27,3 +27,20 @@ export async function postSignIn({ email, password }: SignInRequestBody) {
   const json: SignInResponse = await res.json();
   return json;
 }
+
+interface PostSignInGoogleRequest {
+  token: string;
+}
+
+export async function postSignInGoogle({ token }: PostSignInGoogleRequest) {
+  const res = await fetch(`${AUTH_BASE_URL}/auth/signin/GOOGLE`, {
+    method: "POST",
+    body: JSON.stringify({ token }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    next: { revalidate: 0 },
+  });
+  const json: SignInResponse = await res.json();
+  return json;
+}

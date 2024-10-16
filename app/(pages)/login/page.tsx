@@ -1,50 +1,29 @@
-/* eslint-disable no-console */
-import { redirect } from "next/navigation";
-import { AuthError } from "next-auth";
+"use client";
 
-import { signIn } from "@/auth";
+import { signIn } from "next-auth/react";
 
-export default async function LoginPage() {
-  async function postSignIn(formData: FormData) {
-    "use server";
+import { Button } from "@/@common/Button";
+import { postSignInAction } from "@/apis/action";
 
-    let shouldRedirect = false;
-    try {
-      const email = formData.get("email");
-      const password = formData.get("password");
-      await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
-      shouldRedirect = true;
-    } catch (error) {
-      console.log({ error });
-      if (error instanceof AuthError) {
-        switch (error.type) {
-          case "CredentialsSignin":
-            console.log("Invalid credentials.");
-            break;
-          default:
-            console.log("Something went wrong.");
-            break;
-        }
-      }
-      console.log("unknown");
-      return;
-    }
-    if (shouldRedirect) redirect("/");
-  }
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+
+export default function LoginPage() {
+  const signInOAuth = (provider: "google" | "kakao") => {
+    signIn(provider, {
+      callbackUrl: DEFAULT_LOGIN_REDIRECT,
+    });
+  };
 
   return (
     <div>
-      <form action={postSignIn}>
+      <form action={postSignInAction}>
         <label htmlFor="email">이메일</label>
         <input id="email" name="email" type="email" defaultValue="" />
         <label htmlFor="password">비밀번호</label>
         <input id="password" name="password" type="text" defaultValue="" />
         <button type="submit">로그인</button>
       </form>
+      <Button onClick={() => signInOAuth("google")}>구글 로그인</Button>
     </div>
   );
 }

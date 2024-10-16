@@ -7,15 +7,16 @@
     "source.fixAll.eslint": "explicit"
   },
   "cSpell.words": [
-    "addteam",
-    "Dtos",
-    "nextauth",
-    "querys",
-    "signin",
-    "svgr",
-    "teamid",
-    "zustand"
-  ],
+		"addteam",
+		"Dtos",
+		"Kakao",
+		"nextauth",
+		"querys",
+		"signin",
+		"svgr",
+		"teamid",
+		"zustand"
+	],
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
   ]

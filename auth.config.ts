@@ -2,7 +2,7 @@
 import { jwtDecode } from "jwt-decode";
 import { JWT } from "next-auth/jwt";
 
-import { postRefreshAccessToken } from "./apis/auth";
+import { postRefreshAccessToken, postSignInGoogle } from "./apis/auth";
 
 import type { NextAuthConfig } from "next-auth";
 
@@ -26,8 +26,18 @@ export const authConfig = {
   pages: {
     signIn: "/login",
   },
+  // events: {
+  //  async linkAccount({ user }) {
+  //    console.log({ user });
+  //  },
+  // },
   callbacks: {
     async jwt({ token, user, account }) {
+      if (account?.provider === "google" && account.id_token) {
+        user = await postSignInGoogle({
+          token: account.id_token,
+        });
+      }
       if (user && account) {
         return {
           ...user,

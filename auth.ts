@@ -1,5 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
+import Kakao from "next-auth/providers/kakao";
 import { z } from "zod";
 
 import { postSignIn } from "./apis/auth";
@@ -10,6 +12,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   session: { strategy: "jwt" },
   providers: [
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+    Kakao,
     Credentials({
       async authorize(credentials) {
         const parsedCredentials = z
