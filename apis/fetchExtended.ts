@@ -1,7 +1,27 @@
 import { getCookie } from "cookies-next";
+import { jwtDecode } from "jwt-decode";
 import returnFetch, { FetchArgs } from "return-fetch";
 
-import { getAccessToken } from "@/lib/cookie";
+import { getServerCookie, setServerCookie } from "@/lib/cookie";
+
+import { postRefreshAccessToken } from "./auth";
+
+export async function refreshAccessToken() {
+  let refreshToken;
+  if (typeof window !== "undefined")
+    refreshToken = await getServerCookie("refreshToken");
+  else refreshToken = getCookie("refreshToken");
+
+  try {
+    const { accessToken } = await postRefreshAccessToken(refreshToken!);
+    setServerCookie("accessToken", accessToken);
+    return accessToken;
+  } catch (error) {
+    return {
+      error: "RefreshAccessTokenError",
+    };
+  }
+}
 
 const fetchExtended = returnFetch({
   baseUrl: "https://fe-project-cowokers.vercel.app",
@@ -17,28 +37,33 @@ const fetchExtended = returnFetch({
         url.pathname = `/8-7${pathname}`;
       }
 
+      if (!args[1]?.headers) return args;
+
       let accessToken;
-      if (typeof window === "undefined") {
-        accessToken = await getAccessToken();
-      } else {
-        accessToken = getCookie("accessToken");
-      }
+      if (typeof window === "undefined")
+        accessToken = await getServerCookie("accessToken");
+      else accessToken = getCookie("accessToken");
 
       if (!accessToken) return args;
-      if (args[1]?.headers) {
-        const { headers } = args[1];
-        const headerInit: HeadersInit = new Headers(headers);
-        headerInit.set("Authorization", `Bearer ${accessToken}`);
-        const newArgs: FetchArgs = [
-          args[0],
-          {
-            ...args[1],
-            headers: headerInit,
-          },
-        ];
-        return newArgs;
+
+      const timeRemaining =
+        jwtDecode(accessToken).exp! - Math.floor(new Date().getTime() / 1000);
+
+      if (timeRemaining <= 0) {
+        accessToken = await refreshAccessToken();
       }
-      return args;
+
+      const { headers } = args[1];
+      const headerInit: HeadersInit = new Headers(headers);
+      headerInit.set("Authorization", `Bearer ${accessToken}`);
+      const newArgs: FetchArgs = [
+        args[0],
+        {
+          ...args[1],
+          headers: headerInit,
+        },
+      ];
+      return newArgs;
     },
   },
 });
