@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 const variant = cva(
   [
     "w-full",
-    "cursor-text",
     "rounded-xl border border-solid border-primary",
     "bg-input-default",
     "text-default-light placeholder:text-placeHolder",
