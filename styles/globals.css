@@ -35,6 +35,24 @@ select {
   cursor: pointer;
 }
 
+textarea,
+input {
+  cursor: text;
+}
+
+input[type="checkbox"],
+input[type="color"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="image"],
+input[type="month"],
+input[type="range"],
+input[type="reset"],
+input[type="time"],
+input[type="week"] {
+  cursor: pointer;
+}
+
 /* input type number 에서 화살표 제거 */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
