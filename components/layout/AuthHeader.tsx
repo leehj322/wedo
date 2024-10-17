@@ -5,21 +5,17 @@ import UserDropDown from "@/components/@common/dropdown/UserDropDown";
 import GroupsResponsive from "@/layout/groups/GroupsResponsive";
 import { Avatar, AvatarFallback, AvatarImage } from "@/ui/avatar";
 
-import { signOut } from "@/auth";
-
 export default async function AuthHeader() {
   const user = await getUser();
-
-  const actionSignOut = async () => {
-    "use server";
-
-    await signOut();
-  };
 
   return (
     <>
       <GroupsResponsive />
-      <UserDropDown actionSignOut={actionSignOut}>
+      <UserDropDown
+        actionSignOut={async () => {
+          "use server";
+        }}
+      >
         <div className="flex grow items-center justify-end gap-[10px] tab:grow-0">
           <Avatar className="flex h-[30px] w-[30px] items-center justify-center bg-[#EDEDED]">
             <AvatarImage src={user?.image} alt="user avatar" />
