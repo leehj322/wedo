@@ -1,37 +1,25 @@
-/* eslint-disable no-console */
-
 "use server";
 
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { AuthError } from "next-auth";
 
-import { signIn } from "@/auth";
+import { postSignIn } from "./auth";
 
-export async function postSignInAction(formData: FormData) {
+export async function actionSignIn(formData: FormData) {
+  const cookieStore = cookies();
   let shouldRedirect = false;
   try {
-    const email = formData.get("email");
-    const password = formData.get("password");
-    await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    });
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const res = await postSignIn({ email, password });
+    cookieStore.set("accessToken", res.accessToken);
+    cookieStore.set("refreshToken", res.refreshToken);
     shouldRedirect = true;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log({ error });
-    if (error instanceof AuthError) {
-      switch (error.type) {
-        case "CredentialsSignin":
-          console.log("Invalid credentials.");
-          break;
-        default:
-          console.log("Something went wrong.");
-          break;
-      }
-    }
-    console.log("unknown");
-    return;
   }
-  if (shouldRedirect) redirect("/");
+  if (shouldRedirect) {
+    redirect("/");
+  }
 }
