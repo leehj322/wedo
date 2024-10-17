@@ -13,7 +13,9 @@
     "signin",
     "svgr",
     "teamid",
-    "zustand"
+    "zustand",
+    "addteam",
+    "jointeam"
   ],
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
