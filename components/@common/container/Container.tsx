@@ -11,8 +11,7 @@ const backgroundColors = {
 };
 
 export default function Container({ children, background }: ContainerProps) {
-  const backgroundClass =
-    backgroundColors[background] || backgroundColors.white;
+  const backgroundClass = backgroundColors[background];
 
   return (
     <div className={`min-h-[100vh] bg-${backgroundClass}`}>
