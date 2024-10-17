@@ -8,7 +8,7 @@ export default function NoTeamActions() {
       <Button asChild>
         <Link href="/addteam">팀 생성하기</Link>
       </Button>
-      <Button variant="outline" className="border-2">
+      <Button asChild variant="outline" className="border-2">
         <Link href="/jointeam">팀 참여하기</Link>
       </Button>
     </div>
