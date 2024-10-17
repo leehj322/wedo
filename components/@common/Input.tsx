@@ -7,8 +7,7 @@ import { cn } from "@/lib/utils";
 const variant = cva(
   [
     "w-full",
-    "rounded-xl border border-solid border-primary hover:border-hover focus:border-focus",
-    "bg-input-default",
+    "rounded-xl border border-solid border-primary hover:border-brand-border focus:border-brand-border",
     "p-4",
     "text-default-light placeholder:text-placeHolder",
   ],
@@ -32,6 +31,10 @@ const variant = cva(
         md: "max-tab:py-3",
         lg: "tab:px-6",
       },
+      bgColor: {
+        default: "bg-input-default",
+        white: "bg-white",
+      },
       error: {
         true: "border-danger",
       },
@@ -48,22 +51,39 @@ const variant = cva(
       boxSize: "default",
       fontSize: "default",
       padding: "default",
+      bgColor: "default",
     },
   },
 );
 
 type Props = InputHTMLAttributes<HTMLInputElement> &
-  VariantProps<typeof variant>;
+  VariantProps<typeof variant> & {
+    errorMessage?: string;
+  };
 
 export default forwardRef<HTMLInputElement, Props>(function Input(
-  { boxSize, fontSize, padding, error, className, ...props },
+  {
+    boxSize,
+    fontSize,
+    padding,
+    bgColor,
+    error,
+    errorMessage,
+    className,
+    ...props
+  },
   ref,
 ) {
   return (
-    <input
-      className={cn(variant({ boxSize, fontSize, padding, error, className }))}
-      ref={ref}
-      {...props}
-    />
+    <section className="flex w-full flex-col gap-y-2">
+      <input
+        className={cn(
+          variant({ boxSize, fontSize, padding, bgColor, error, className }),
+        )}
+        ref={ref}
+        {...props}
+      />
+      {errorMessage && <p className="md-medium text-danger">{errorMessage}</p>}
+    </section>
   );
 });
