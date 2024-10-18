@@ -7,9 +7,9 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 
 import { Button } from "@/components/@common/Button";
-import { useUserGroups } from "@/hooks/querys/user";
 import { cn } from "@/lib/utils";
 import Burger from "@/public/svg/burger";
+import { useUserGroups } from "@/queries/user";
 import { navigationMenuTriggerStyle } from "@/ui/navigation-menu";
 import {
   Sheet,
