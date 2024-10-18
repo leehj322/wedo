@@ -37,7 +37,7 @@ export default function SheetGroups() {
           <SheetTitle>그룹 목록</SheetTitle>
         </SheetHeader>
         <ul className="mt-10 flex flex-col gap-3">
-          {groups?.length &&
+          {groups &&
             groups.map(({ id, name, image }) => (
               <Link
                 key={`${name + id}mobile`}

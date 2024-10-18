@@ -23,20 +23,23 @@ export default function NavigationMenuGroups() {
   const { data: groups } = useUserGroups();
   const { teamid: teamId } = useParams();
 
+  const foundGroupName =
+    Array.isArray(groups) &&
+    groups.find(({ id }) => id === Number(teamId))?.name;
+
   return (
     <NavigationMenu
       className={cn("h-[32px]", Number.isNaN(Number(teamId)) && "hidden")}
     >
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-transparent">
-            <span className="lg-medium">
-              {groups?.filter(({ id }) => id === Number(teamId))[0]?.name ??
-                "temp"}
-            </span>
-          </NavigationMenuTrigger>
+          {foundGroupName && (
+            <NavigationMenuTrigger className="bg-transparent">
+              <span className="lg-medium">{foundGroupName}</span>
+            </NavigationMenuTrigger>
+          )}
           <NavigationMenuContent className="flex flex-col gap-2 bg-primary-light p-4">
-            {groups?.length &&
+            {groups &&
               groups.map(({ id, name, image }) => (
                 <Link
                   key={`${name + id}notMobile`}
