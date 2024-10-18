@@ -24,7 +24,7 @@ export async function refreshAccessToken() {
 }
 
 const fetchExtended = returnFetch({
-  baseUrl: "https://fe-project-cowokers.vercel.app",
+  baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
   headers: {
     "Content-Type": "application/json",
     credentials: "include",

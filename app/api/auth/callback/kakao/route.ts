@@ -8,7 +8,7 @@ export async function GET(req: Request) {
   const code = newUrl.searchParams.get("code")!;
   const loginRes = await postSignInKakao({
     token: code,
-    redirectUri: "http://localhost:3000/api/auth/callback/kakao",
+    redirectUri: process.env.KAKAO_REDIRECT_URI!,
   });
   const cookieStore = cookies();
   cookieStore.set("accessToken", loginRes.accessToken);

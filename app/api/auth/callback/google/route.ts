@@ -12,7 +12,7 @@ export async function GET(req: Request) {
     client_id: process.env.GOOGLE_CLIENT_ID!,
     client_secret: process.env.GOOGLE_CLIENT_SECRET!,
     grant_type: "authorization_code",
-    redirect_uri: `http://localhost:3000/api/auth/callback/google`,
+    redirect_uri: process.env.GOOGLE_REDIRECT_URI!,
   };
   const response = await fetch(TOKEN_ENDPOINT, {
     method: "POST",

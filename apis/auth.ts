@@ -1,6 +1,6 @@
 import { SignInRequestBody, SignInResponse } from "@/dtos/AuthDtos";
 
-const AUTH_BASE_URL = `https://fe-project-cowokers.vercel.app/8-7`;
+const AUTH_BASE_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/8-7`;
 
 export async function postRefreshAccessToken(refreshToken: string) {
   const res = await fetch(`${AUTH_BASE_URL}/auth/refresh-token`, {
