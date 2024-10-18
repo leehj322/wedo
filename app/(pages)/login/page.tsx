@@ -31,7 +31,7 @@ export default function LoginPage() {
       </form>
       <Link
         className="w-30 h-10 bg-gray-500"
-        href={`https://accounts.google.com/o/oauth2/auth?${google}`}
+        href={`https://accounts.google.com/o/oauth2/v2/auth?${google}`}
       >
         구글 로그인
       </Link>
