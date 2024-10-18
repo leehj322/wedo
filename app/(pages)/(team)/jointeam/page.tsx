@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 
 import { useRouter } from "next/navigation";
 
@@ -29,7 +29,9 @@ export default function JoinTeamPage() {
   };
 
   // 모달의 팀 참여하기 버튼을 눌렀을 때, input을 체크하고 mutate 함수를 실행하는 핸들러
-  const handleTokenSubmitButtonClick = async () => {
+  const handleTokenSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     if (!teamToken) {
       setInputErrorMessage("토큰을 입력해주세요!");
       return;
@@ -56,7 +58,10 @@ export default function JoinTeamPage() {
 
   return (
     <Container background="lightBeige">
-      <div className="mx-auto pt-[72px] tab:w-[460px] tab:pt-[100px] pc:pt-[140px]">
+      <form
+        className="mx-auto pt-[72px] tab:w-[460px] tab:pt-[100px] pc:pt-[140px]"
+        onSubmit={handleTokenSubmit}
+      >
         <h1 className="2xl-medium mb-6 text-center text-default-light pc:4xl-medium tab:mb-20">
           팀 참여하기
         </h1>
@@ -71,16 +76,13 @@ export default function JoinTeamPage() {
           placeholder="팀 토큰을 입력해주세요."
           value={teamToken}
         />
-        <Button
-          className="mb-6 mt-10 w-full"
-          onClick={handleTokenSubmitButtonClick}
-        >
+        <Button className="mb-6 mt-10 w-full" type="submit">
           참여하기
         </Button>
         <p className="lg-normal text-center text-default-light">
           공유받은 팀 토큰을 입력해 참여할 수 있어요.
         </p>
-      </div>
+      </form>
     </Container>
   );
 }
