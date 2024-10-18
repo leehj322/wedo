@@ -23,14 +23,3 @@ export async function actionSignIn(formData: FormData) {
     redirect("/");
   }
 }
-
-export const actionGoogleSignIn = async () => {
-  const googleParams = {
-    client_id: process.env.GOOGLE_CLIENT_ID!,
-    redirect_uri: `http://localhost:3000/api/auth/callback/google`,
-    response_type: "code",
-    scope: "openid profile email",
-  };
-  const params = new URLSearchParams(googleParams);
-  redirect(`https://accounts.google.com/o/oauth2/auth?${params}`);
-};
