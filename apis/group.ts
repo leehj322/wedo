@@ -1,4 +1,8 @@
-import { AcceptInvitationResponse, AddTeamResponse } from "@/dtos/GroupDtos";
+import {
+  AcceptInvitationResponse,
+  AddTeamResponse,
+  GetTeamMemberResponse,
+} from "@/dtos/GroupDtos";
 
 import fetchExtended from "./fetchExtended";
 import { uploadImage } from "./image";
@@ -39,6 +43,23 @@ export async function addTeam({
     method: "POST",
     body: JSON.stringify({ image: imageUrl, name }),
   });
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new Error(json.message);
+  }
+
+  return json;
+}
+
+export async function getTeamMember({
+  groupId,
+  memberUserId,
+}: {
+  groupId: number;
+  memberUserId: number;
+}): Promise<GetTeamMemberResponse> {
+  const res = await fetchExtended(`/groups/${groupId}/member/${memberUserId}`);
   const json = await res.json();
 
   if (!res.ok) {

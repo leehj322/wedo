@@ -9,3 +9,12 @@ export interface AddTeamResponse {
   createdAt: string;
   id: number;
 }
+
+export interface GetTeamMemberResponse {
+  userId: number;
+  groupId: number;
+  userName: string;
+  userEmail: string;
+  userImage: string | null;
+  role: "ADMIN" | "MEMBER";
+}
