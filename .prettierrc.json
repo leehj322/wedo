@@ -8,6 +8,5 @@
   "endOfLine": "auto",
   "useTabs": false,
   "arrowParens": "always",
-  "plugins": ["prettier-plugin-tailwindcss"],
-  "tailwindFunctions": ["clsx", "cva", "cn", "tw"]
+  "plugins": ["prettier-plugin-tailwindcss"]
 }
