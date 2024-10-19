@@ -8,6 +8,7 @@ import { Button } from "@/components/@common/Button";
 import Input from "@/components/@common/Input";
 import Container from "@/components/@common/container/Container";
 import { useToast } from "@/hooks/useToast";
+import { revalidateLayout } from "@/lib/revalidate";
 import { useAcceptInvitation } from "@/queries/group";
 
 export default function JoinTeamPage() {
@@ -51,6 +52,7 @@ export default function JoinTeamPage() {
         (() => toast({ title: "팀 참여에 성공했습니다!" }))();
 
         const { groupId: teamId } = response;
+        revalidateLayout();
         router.push(`/${teamId}`);
       },
     });

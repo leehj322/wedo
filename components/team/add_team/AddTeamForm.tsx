@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/@common/Button";
 import { useToast } from "@/hooks/useToast";
+import { revalidateLayout } from "@/lib/revalidate";
 import { useAddTeam } from "@/queries/group";
 
 import TeamImageInput from "./TeamImageInput";
@@ -96,6 +97,7 @@ export default function AddTeamForm() {
           (() => toast({ title: "팀 생성에 성공했습니다!" }))();
 
           const { id: teamId } = response;
+          revalidateLayout();
           router.push(`/${teamId}`);
         },
       },
