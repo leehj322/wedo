@@ -14,13 +14,10 @@ export async function uploadImage(
   const formData = new FormData();
   formData.append("image", imageFile);
 
-  const res = await fetchExtendedForm(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/8-7/images/upload`,
-    {
-      method: "POST",
-      body: formData,
-    },
-  );
+  const res = await fetchExtendedForm(`/images/upload`, {
+    method: "POST",
+    body: formData,
+  });
   const json = await res.json();
 
   if (!res.ok) {

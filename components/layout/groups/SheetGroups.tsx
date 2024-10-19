@@ -7,9 +7,9 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 
 import { Button } from "@/components/@common/Button";
+import { UserGroupsResponse } from "@/dtos/UserDtos";
 import { cn } from "@/lib/utils";
 import Burger from "@/public/svg/burger";
-import { useUserGroups } from "@/queries/user";
 import { navigationMenuTriggerStyle } from "@/ui/navigation-menu";
 import {
   Sheet,
@@ -19,8 +19,11 @@ import {
   SheetTrigger,
 } from "@/ui/sheet";
 
-export default function SheetGroups() {
-  const { data: groups } = useUserGroups();
+export default function SheetGroups({
+  groups,
+}: {
+  groups: UserGroupsResponse[];
+}) {
   const { teamid: teamId } = useParams();
   const [open, setOpen] = useState(false);
 

@@ -15,12 +15,14 @@ import {
   navigationMenuTriggerStyle,
   NavigationMenuViewport,
 } from "@/components/@common/modal/NavigationMenu";
+import { UserGroupsResponse } from "@/dtos/UserDtos";
 import { cn } from "@/lib/utils";
-import { useUserGroups } from "@/queries/user";
 
-// Navigation Menu의 외곽선이 지워지지 않음 (border-0, shadow-none을 적용했을 때 무반응)
-export default function NavigationMenuGroups() {
-  const { data: groups } = useUserGroups();
+export default function NavigationMenuGroups({
+  groups,
+}: {
+  groups: UserGroupsResponse[];
+}) {
   const { teamid: teamId } = useParams();
 
   const foundGroupName =
