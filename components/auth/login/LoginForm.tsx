@@ -9,10 +9,10 @@ import { useRouter } from "next/navigation";
 import z from "zod";
 
 import { Button } from "@/@common/Button";
-import { actionSignIn } from "@/apis/action";
+import { actionSignIn, State } from "@/apis/action";
 import FormProviderField from "@/components/auth/InputField";
 
-const INITIAL_LOGIN_STATE = {
+const INITIAL_LOGIN_STATE: State = {
   status: "NOT_YET",
 };
 

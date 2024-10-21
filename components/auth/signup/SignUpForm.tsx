@@ -9,10 +9,10 @@ import { useRouter } from "next/navigation";
 import z from "zod";
 
 import { Button } from "@/@common/Button";
-import { actionSignUp } from "@/apis/action";
+import { actionSignUp, State } from "@/apis/action";
 import FormProviderField from "@/components/auth/InputField";
 
-const INITIAL_LOGIN_STATE = {
+const INITIAL_LOGIN_STATE: State = {
   status: "NOT_YET",
 };
 
@@ -93,6 +93,7 @@ export default function SignUpForm() {
             control={form.control}
           />
         </div>
+        {state.status === "API_ERROR" && <span>{state.message!}</span>}
         <Button
           className="mt-10"
           disabled={!form.formState.isValid}
