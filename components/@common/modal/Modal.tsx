@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  ReactElement,
-  useState,
-  useEffect,
-  cloneElement,
-  ReactNode,
-} from "react";
+import { ReactElement, useEffect, cloneElement, ReactNode } from "react";
 
 import {
   Dialog,
@@ -25,15 +19,18 @@ import {
   SheetTitle,
 } from "@/components/@common/modal/Sheet";
 import useDeviceType from "@/hooks/useDeviceType";
+import useToggle from "@/hooks/useToggle";
 
 interface ModalProps {
   type: "modal" | "alert";
   children: ReactNode;
   trigger: boolean | ReactElement;
-  title?: string;
-  description?: string;
+  title?: string | ReactElement;
+  description?: string | ReactElement;
   footer?: ReactNode;
   hasCrossCloseIcon?: boolean;
+  onOpenChange?: () => void;
+  contentClassName?: string;
 }
 
 /**
@@ -44,6 +41,8 @@ interface ModalProps {
  * @param description modal의 description, <p> 태그 사용
  * @param footer modal의 footer, footer에 onClick이벤트로 modal을 close하도록 하기 때문에 내부에 모달이 종료될때 눌러야 하는 버튼을 배치
  * @param hasCrossCloseIcon modal의 우측 상단에 X 모양 닫힘 Icon을 표시할지 안할지 결정
+ * @param onOpenChange trigger를 boolean값으로 쓰는 경우 닫힐때 실행할 toggleState 함수 등을 전달 혹은 닫을때 추가로 하고싶은 동작
+ * @param contentClassName 모달 내부의 content의 padding값 등을 수정하는데 사용, tailwind className으로 전달
  */
 export default function Modal({
   type,
@@ -53,13 +52,16 @@ export default function Modal({
   description,
   footer,
   hasCrossCloseIcon,
+  onOpenChange,
+  contentClassName,
 }: ModalProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, toggleIsOpen, setIsOpen] = useToggle(false);
   const [isMobile] = useDeviceType();
 
   // open 상태를 toggle하는 함수
-  const toggleIsOpen = () => {
-    setIsOpen((prevIsOpen) => !prevIsOpen);
+  const handleOpenChange = () => {
+    toggleIsOpen();
+    if (onOpenChange) onOpenChange(); // open 상태가 바뀔때마다 외부에서 받은 onOpenChange도 실행
   };
 
   // alert인 경우 외부와 상호작용 했을 때 닫히지 않도록 하는 함수
@@ -72,44 +74,55 @@ export default function Modal({
   useEffect(() => {
     if (typeof trigger !== "boolean") return;
     setIsOpen(trigger);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trigger]);
 
   return (
     <>
       {typeof trigger !== "boolean" &&
         cloneElement(trigger, {
-          onClick: toggleIsOpen,
+          onClick: handleOpenChange,
         })}
       {isMobile ? (
-        <Sheet open={isOpen} onOpenChange={toggleIsOpen}>
+        <Sheet open={isOpen} onOpenChange={handleOpenChange}>
           <SheetContent
             hasCrossCloseIcon={type === "alert" ? false : hasCrossCloseIcon}
             onInteractOutside={handleInteractOutside}
+            className={contentClassName}
           >
-            <SheetHeader>
-              {title && <SheetTitle>{title}</SheetTitle>}
-              {description && (
-                <SheetDescription>{description}</SheetDescription>
-              )}
-            </SheetHeader>
+            {(title || description) && (
+              <SheetHeader>
+                {title && <SheetTitle>{title}</SheetTitle>}
+                {description && (
+                  <SheetDescription>{description}</SheetDescription>
+                )}
+              </SheetHeader>
+            )}
             {children}
-            <SheetFooter onClick={toggleIsOpen}>{footer}</SheetFooter>
+            {footer && (
+              <SheetFooter onClick={handleOpenChange}>{footer}</SheetFooter>
+            )}
           </SheetContent>
         </Sheet>
       ) : (
-        <Dialog open={isOpen} onOpenChange={toggleIsOpen}>
+        <Dialog open={isOpen} onOpenChange={handleOpenChange}>
           <DialogContent
             hasCrossCloseIcon={type === "alert" ? false : hasCrossCloseIcon}
             onInteractOutside={handleInteractOutside}
+            className={contentClassName}
           >
-            <DialogHeader>
-              {title && <DialogTitle>{title}</DialogTitle>}
-              {description && (
-                <DialogDescription>{description}</DialogDescription>
-              )}
-            </DialogHeader>
+            {(title || description) && (
+              <DialogHeader>
+                {title && <DialogTitle>{title}</DialogTitle>}
+                {description && (
+                  <DialogDescription>{description}</DialogDescription>
+                )}
+              </DialogHeader>
+            )}
             {children}
-            <DialogFooter onClick={toggleIsOpen}>{footer}</DialogFooter>
+            {footer && (
+              <DialogFooter onClick={handleOpenChange}>{footer}</DialogFooter>
+            )}
           </DialogContent>
         </Dialog>
       )}
