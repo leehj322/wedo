@@ -1,6 +1,12 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 
-import { acceptInvitation, getTeam, addTeam, editTeam } from "@/apis/group";
+import {
+  acceptInvitation,
+  getTeam,
+  addTeam,
+  editTeam,
+  delTeam,
+} from "@/apis/group";
 
 export function useAcceptInvitation() {
   return useMutation({
@@ -33,5 +39,11 @@ export function useEditTeam() {
       image: File | string;
       name: string;
     }) => editTeam({ groupId, image, name }),
+  });
+}
+
+export function useDelTeam() {
+  return useMutation({
+    mutationFn: ({ groupId }: { groupId: number }) => delTeam({ groupId }),
   });
 }

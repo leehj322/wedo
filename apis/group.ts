@@ -95,6 +95,22 @@ export async function editTeam({
   return json;
 }
 
+export async function delTeam({ groupId }: { groupId: number }) {
+  const res = await fetchExtended(`/groups/${groupId}`, {
+    method: "DELETE",
+  });
+
+  if (res.status === 204) {
+    return;
+  }
+
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new Error(json.message);
+  }
+}
+
 export async function getTeamMember({
   groupId,
   memberUserId,
