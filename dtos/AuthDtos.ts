@@ -16,3 +16,8 @@ export interface SignInResponse {
     teamId: string;
   };
 }
+
+export interface SignUpRequestBody extends SignInRequestBody {
+  nickname: string;
+  passwordConfirmation: string;
+}

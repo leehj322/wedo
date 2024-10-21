@@ -1,4 +1,8 @@
-import { SignInRequestBody, SignInResponse } from "@/dtos/AuthDtos";
+import {
+  SignInRequestBody,
+  SignInResponse,
+  SignUpRequestBody,
+} from "@/dtos/AuthDtos";
 
 const AUTH_BASE_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/8-7`;
 
@@ -19,6 +23,28 @@ export async function postSignIn({ email, password }: SignInRequestBody) {
   const res = await fetch(`${AUTH_BASE_URL}/auth/signin`, {
     method: "POST",
     body: JSON.stringify({ email, password }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    next: { revalidate: 0 },
+  });
+  if (!res.ok) {
+    const { message }: { message: string } = await res.json();
+    throw new Error(message);
+  }
+  const json: SignInResponse = await res.json();
+  return json;
+}
+
+export async function postSignUp({
+  email,
+  nickname,
+  password,
+  passwordConfirmation,
+}: SignUpRequestBody) {
+  const res = await fetch(`${AUTH_BASE_URL}/auth/signUp`, {
+    method: "POST",
+    body: JSON.stringify({ email, nickname, password, passwordConfirmation }),
     headers: {
       "Content-Type": "application/json",
     },
