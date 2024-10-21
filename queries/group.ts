@@ -1,10 +1,17 @@
-import { useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 
-import { acceptInvitation, addTeam } from "@/apis/group";
+import { acceptInvitation, getTeam, addTeam } from "@/apis/group";
 
 export function useAcceptInvitation() {
   return useMutation({
     mutationFn: (token: string) => acceptInvitation(token),
+  });
+}
+
+export function useGetTeam(groupId: number) {
+  return useQuery({
+    queryKey: ["team", groupId],
+    queryFn: () => getTeam({ groupId }),
   });
 }
 

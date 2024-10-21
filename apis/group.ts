@@ -1,5 +1,6 @@
 import {
   AcceptInvitationResponse,
+  GetTeamResponse,
   AddTeamResponse,
   GetTeamMemberResponse,
 } from "@/dtos/GroupDtos";
@@ -27,6 +28,16 @@ export async function acceptInvitation(
     throw new Error(json.message);
   }
 
+  return json;
+}
+
+export async function getTeam({
+  groupId,
+}: {
+  groupId: number;
+}): Promise<GetTeamResponse> {
+  const res = await fetchExtended(`/groups/${groupId}`);
+  const json = await res.json();
   return json;
 }
 
