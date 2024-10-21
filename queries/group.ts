@@ -2,6 +2,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 
 import {
   acceptInvitation,
+  inviteMemberWithEmail,
   getTeam,
   addTeam,
   editTeam,
@@ -19,6 +20,13 @@ export function useGenerateInviteToken(groupId: number) {
 export function useAcceptInvitation() {
   return useMutation({
     mutationFn: (token: string) => acceptInvitation(token),
+  });
+}
+
+export function useInviteMemberWithEmail() {
+  return useMutation({
+    mutationFn: ({ groupId, email }: { groupId: number; email: string }) =>
+      inviteMemberWithEmail({ groupId, email }),
   });
 }
 
