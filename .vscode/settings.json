@@ -9,15 +9,16 @@
   "cSpell.words": [
     "addteam",
     "Dtos",
+    "hookform",
+    "jointeam",
     "Kakao",
     "nextauth",
     "querys",
     "signin",
+    "signup",
     "svgr",
     "teamid",
-    "zustand",
-    "addteam",
-    "jointeam"
+    "zustand"
   ],
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
