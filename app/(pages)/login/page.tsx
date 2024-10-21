@@ -1,6 +1,8 @@
-import Link from "next/link";
-
-import { actionSignIn } from "@/apis/action";
+import Container from "@/@common/container/Container";
+import LoginForm from "@/components/auth/login/LoginForm";
+import OAuthLink from "@/components/auth/login/OAuthLink";
+import GoogleIcon from "@/public/images/google.png";
+import KakaoIcon from "@/public/images/kakao.png";
 
 export const GOOGLE_OAUTH_PARAMS = {
   client_id: process.env.GOOGLE_CLIENT_ID!,
@@ -21,26 +23,27 @@ export default function LoginPage() {
   const kakao = new URLSearchParams(KAKAO_OAUTH_PARAMS);
 
   return (
-    <div>
-      <form action={actionSignIn}>
-        <label htmlFor="email">이메일</label>
-        <input id="email" name="email" type="email" defaultValue="" />
-        <label htmlFor="password">비밀번호</label>
-        <input id="password" name="password" type="text" defaultValue="" />
-        <button type="submit">로그인</button>
-      </form>
-      <Link
-        className="w-30 h-10 bg-gray-500"
-        href={`https://accounts.google.com/o/oauth2/v2/auth?${google}`}
-      >
-        구글 로그인
-      </Link>
-      <Link
-        className="w-30 h-10 bg-gray-500"
-        href={`https://kauth.kakao.com/oauth/authorize?${kakao}`}
-      >
-        카카오 로그인
-      </Link>
-    </div>
+    <Container background="lightBeige">
+      <div className="mx-auto mt-6 flex max-w-[460px] flex-col items-center justify-center pb-20 tab:mt-[100px] pc:mt-[140px]">
+        <h1 className="2xl-medium pc:4xl-medium">로그인</h1>
+        <LoginForm />
+        <div className="mt-[60px] flex w-full flex-col items-center gap-4">
+          <OAuthLink
+            alt="구글 로그인"
+            icon={GoogleIcon}
+            href={`https://accounts.google.com/o/oauth2/v2/auth?${google}`}
+          >
+            Google 게정으로 로그인
+          </OAuthLink>
+          <OAuthLink
+            alt="카카오 로그인"
+            icon={KakaoIcon}
+            href={`https://kauth.kakao.com/oauth/authorize?${kakao}`}
+          >
+            카카오 게정으로 로그인
+          </OAuthLink>
+        </div>
+      </div>
+    </Container>
   );
 }

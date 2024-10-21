@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-import { Button } from "@/components/@common/Button";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,7 +13,8 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
   NavigationMenuViewport,
-} from "@/components/@common/modal/NavigationMenu";
+} from "@/@common/dropdown/NavigationMenu";
+import { Button } from "@/components/@common/Button";
 import { UserGroupsResponse } from "@/dtos/UserDtos";
 import { cn } from "@/lib/utils";
 

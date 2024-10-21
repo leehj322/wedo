@@ -24,6 +24,10 @@ export async function postSignIn({ email, password }: SignInRequestBody) {
     },
     next: { revalidate: 0 },
   });
+  if (!res.ok) {
+    const { message }: { message: string } = await res.json();
+    throw new Error(message);
+  }
   const json: SignInResponse = await res.json();
   return json;
 }

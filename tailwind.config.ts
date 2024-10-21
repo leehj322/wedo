@@ -136,6 +136,10 @@ const config: Config = {
         disabled: "#94A3B8",
         subText: "#666666",
         placeHolder: "#64748B",
+        link: {
+          light: "#FF5E35",
+          dark: "#10b981",
+        },
       },
     },
   },
