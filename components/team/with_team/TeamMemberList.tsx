@@ -1,32 +1,31 @@
+"use client";
+
 import Image from "next/image";
 
 import Kebab from "@/public/svg/kebab.svg";
-
-const USER_INFO = [
-  {
-    userImage: null,
-    userName: "강미희",
-    userEmail: "Mihee123123123@naver.com",
-  },
-  { userImage: null, userName: "강미희", userEmail: "Mihee@naver.com" },
-  { userImage: null, userName: "강미희", userEmail: "Mihee@naver.com" },
-  { userImage: null, userName: "강미희", userEmail: "Mihee@naver.com" },
-  { userImage: null, userName: "강미희", userEmail: "Mihee@naver.com" },
-  { userImage: null, userName: "강미희", userEmail: "Mihee@naver.com" },
-];
+import { useGetTeam } from "@/queries/group";
 
 interface TeamMemberListProps {
   isAdmin: boolean;
+  groupId: number;
 }
 
-export default function TeamMemberList({ isAdmin }: TeamMemberListProps) {
+export default function TeamMemberList({
+  isAdmin,
+  groupId,
+}: TeamMemberListProps) {
+  const { data } = useGetTeam(groupId);
+
+  const teamMembers = data?.members || [];
+  const numberOfMembers = teamMembers.length;
+
   return (
     <>
       <h2 className="mb-4 flex items-center justify-between pc:mb-5">
         <div className="text-[18px]/[19px] font-semibold text-default-light">
           멤버
           <span className="lg-normal ml-2 text-default-light opacity-80">
-            (6명)
+            {`(${numberOfMembers}명)`}
           </span>
         </div>
         {isAdmin && (
@@ -36,9 +35,9 @@ export default function TeamMemberList({ isAdmin }: TeamMemberListProps) {
         )}
       </h2>
       <div className="not-mobile-grid hidden grid-cols-3 gap-6 tab:grid">
-        {USER_INFO.map((user) => (
+        {teamMembers.map((member) => (
           <div
-            key={user.userEmail}
+            key={member.userEmail}
             className="flex h-[68px] items-center justify-between rounded-2xl bg-brand-secondary-light px-6 py-3 tab:h-[73px]"
           >
             <div className="flex min-w-0 gap-3">
@@ -46,18 +45,18 @@ export default function TeamMemberList({ isAdmin }: TeamMemberListProps) {
                 width={32}
                 height={32}
                 src={
-                  user.userImage
-                    ? user.userImage
+                  member.userImage
+                    ? member.userImage
                     : "/images/team_page_default_user_pfp.png"
                 }
                 alt="유저 프로필 이미지"
               />
               <div className="min-w-0">
                 <div className="md-medium truncate text-default-light">
-                  {user.userName}
+                  {member.userName}
                 </div>
                 <div className="md-medium truncate text-subText">
-                  {user.userEmail}
+                  {member.userEmail}
                 </div>
               </div>
             </div>
@@ -66,9 +65,9 @@ export default function TeamMemberList({ isAdmin }: TeamMemberListProps) {
         ))}
       </div>
       <div className="mobile-grid grid grid-cols-2 gap-6 tab:hidden">
-        {USER_INFO.map((user) => (
+        {teamMembers.map((member) => (
           <div
-            key={user.userEmail}
+            key={member.userEmail}
             className="flex h-[68px] items-center justify-between rounded-2xl bg-brand-secondary-light px-6 py-3 tab:h-[73px]"
           >
             <div className="min-w-0">
@@ -77,18 +76,18 @@ export default function TeamMemberList({ isAdmin }: TeamMemberListProps) {
                   width={24}
                   height={24}
                   src={
-                    user.userImage
-                      ? user.userImage
+                    member.userImage
+                      ? member.userImage
                       : "/images/team_page_default_user_pfp.png"
                   }
                   alt="유저 프로필 이미지"
                 />
                 <div className="md-medium truncate text-default-light">
-                  {user.userName}
+                  {member.userName}
                 </div>
               </div>
               <div className="md-medium truncate text-subText">
-                {user.userEmail}
+                {member.userEmail}
               </div>
             </div>
             <Kebab className="shrink-0" width="16" height="16" />
