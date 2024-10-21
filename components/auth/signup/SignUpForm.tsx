@@ -93,7 +93,9 @@ export default function SignUpForm() {
             control={form.control}
           />
         </div>
-        {state.status === "API_ERROR" && <span>{state.message!}</span>}
+        {state.status === "API_ERROR" && (
+          <p className="md-medium mt-4 text-danger">{state.message}</p>
+        )}
         <Button
           className="mt-10"
           disabled={!form.formState.isValid}

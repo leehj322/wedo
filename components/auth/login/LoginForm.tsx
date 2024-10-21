@@ -65,6 +65,9 @@ export default function LoginForm() {
         >
           비밀번호를 잊으셨나요?
         </Link>
+        {state.status === "API_ERROR" && (
+          <p className="md-medium mt-4 text-danger">{state.message}</p>
+        )}
         <Button
           className="mt-10"
           disabled={!form.formState.isValid}
