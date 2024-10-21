@@ -40,4 +40,8 @@ export interface AddTeamResponse {
   id: number;
 }
 
+export interface EditTeamResponse extends AddTeamResponse {
+  teamId: string;
+}
+
 export type GetTeamMemberResponse = Member;

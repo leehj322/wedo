@@ -2,6 +2,7 @@ import {
   AcceptInvitationResponse,
   GetTeamResponse,
   AddTeamResponse,
+  EditTeamResponse,
   GetTeamMemberResponse,
 } from "@/dtos/GroupDtos";
 
@@ -52,6 +53,37 @@ export async function addTeam({
 
   const res = await fetchExtended("/groups", {
     method: "POST",
+    body: JSON.stringify({ image: imageUrl, name }),
+  });
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new Error(json.message);
+  }
+
+  return json;
+}
+
+export async function editTeam({
+  groupId,
+  image,
+  name,
+}: {
+  groupId: number;
+  image: File | string;
+  name: string;
+}): Promise<EditTeamResponse> {
+  // image를 string으로 받는 경우 기존 이미지를 그대로 사용한다고 생각하고 작성함
+  let imageUrl;
+  if (typeof image === "string") {
+    imageUrl = image;
+  } else {
+    const { url } = await uploadImage(image);
+    imageUrl = url;
+  }
+
+  const res = await fetchExtended(`/groups/${groupId}`, {
+    method: "PATCH",
     body: JSON.stringify({ image: imageUrl, name }),
   });
   const json = await res.json();
