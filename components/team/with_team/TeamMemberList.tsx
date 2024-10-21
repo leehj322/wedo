@@ -3,6 +3,7 @@
 import { useGetTeam } from "@/queries/group";
 
 import { PcMemberCard, MobileMemberCard } from "./MemberCard";
+import TeamInviteModalButton from "./TeamInviteModalButton";
 
 interface TeamMemberListProps {
   isAdmin: boolean;
@@ -27,11 +28,7 @@ export default function TeamMemberList({
             {`(${numberOfMembers}명)`}
           </span>
         </div>
-        {isAdmin && (
-          <button className="md-medium text-brand-active">
-            + 새로운 멤버 초대하기
-          </button>
-        )}
+        {isAdmin && <TeamInviteModalButton groupId={groupId} />}
       </h2>
       <div className="pc-and-tablet-grid hidden grid-cols-3 gap-6 tab:grid">
         {teamMembers.map((member) => (
