@@ -1,4 +1,5 @@
 import {
+  GenerateInviteTokenResponse,
   AcceptInvitationResponse,
   GetTeamResponse,
   AddTeamResponse,
@@ -9,6 +10,19 @@ import {
 import fetchExtended from "./fetchExtended";
 import { uploadImage } from "./image";
 import { getUser } from "./user";
+
+export async function generateInviteToken(
+  groupId: number,
+): Promise<GenerateInviteTokenResponse> {
+  const res = await fetchExtended(`/groups/${groupId}/invitation`);
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new Error(json.message);
+  }
+
+  return json;
+}
 
 export async function acceptInvitation(
   token: string,

@@ -1,3 +1,5 @@
+export type GenerateInviteTokenResponse = string;
+
 export interface AcceptInvitationResponse {
   groupId: number;
 }

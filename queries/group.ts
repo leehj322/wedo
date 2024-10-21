@@ -6,7 +6,15 @@ import {
   addTeam,
   editTeam,
   delTeam,
+  generateInviteToken,
 } from "@/apis/group";
+
+export function useGenerateInviteToken(groupId: number) {
+  return useQuery({
+    queryKey: ["inviteToken", groupId],
+    queryFn: () => generateInviteToken(groupId),
+  });
+}
 
 export function useAcceptInvitation() {
   return useMutation({
