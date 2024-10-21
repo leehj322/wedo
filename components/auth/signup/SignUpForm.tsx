@@ -9,31 +9,50 @@ import { useRouter } from "next/navigation";
 import z from "zod";
 
 import { Button } from "@/@common/Button";
-import { actionSignIn, State } from "@/apis/action";
+import { actionSignUp, State } from "@/apis/action";
 import FormProviderField from "@/components/auth/InputField";
 
 const INITIAL_LOGIN_STATE: State = {
   status: "NOT_YET",
 };
 
-export const loginSchema = z.object({
-  email: z.string().email({ message: "이메일 형식이 올바르지 않습니다." }),
-  password: z
-    .string()
-    .min(8, { message: "비밀번호를 8글자 이상 입력해주세요" })
-    .regex(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/, {
-      message: "비밀번호는 영문, 숫자, 특수문자를 포함해야 합니다.",
-    }),
-});
+export const loginSchema = z
+  .object({
+    email: z.string().email({ message: "이메일 형식이 올바르지 않습니다." }),
+    nickname: z
+      .string()
+      .min(1, { message: "닉네입을 입력해주세요" })
+      .max(30, { message: "닉네임을 30자 이하로 입력해주세요" }),
+    password: z
+      .string()
+      .min(8, { message: "비밀번호를 8글자 이상 입력해주세요" })
+      .regex(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/, {
+        message: "비밀번호는 영문, 숫자, 특수문자를 포함해야 합니다.",
+      }),
+    passwordConfirmation: z
+      .string()
+      .min(1, { message: "비밀번호 확인을 입력해주세요" }),
+  })
+  .superRefine(({ passwordConfirmation, password }, ctx) => {
+    if (passwordConfirmation !== password) {
+      ctx.addIssue({
+        code: "custom",
+        message: "비밀번호가 일치하지 않습니다.",
+        path: ["passwordConfirmation"],
+      });
+    }
+  });
 
-export default function LoginForm() {
+export default function SignUpForm() {
   const router = useRouter();
-  const [state, formAction] = useFormState(actionSignIn, INITIAL_LOGIN_STATE);
+  const [state, formAction] = useFormState(actionSignUp, INITIAL_LOGIN_STATE);
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
+      nickname: "",
       password: "",
+      passwordConfirmation: "",
     },
     mode: "onBlur",
   });
@@ -51,6 +70,13 @@ export default function LoginForm() {
             control={form.control}
           />
           <FormProviderField
+            label="닉네임"
+            name="nickname"
+            type="text"
+            placeholder="닉네임을 입력해주세요"
+            control={form.control}
+          />
+          <FormProviderField
             label="비밀번호"
             name="password"
             type="password"
@@ -58,13 +84,15 @@ export default function LoginForm() {
             hasVisibleTrigger
             control={form.control}
           />
+          <FormProviderField
+            label="비밀번호 확인"
+            name="passwordConfirmation"
+            type="password"
+            placeholder="비밀번호를 다시 한번 입력해주세요"
+            hasVisibleTrigger
+            control={form.control}
+          />
         </div>
-        <Link
-          href="/"
-          className="mt-2 self-end text-link-light underline underline-offset-1"
-        >
-          비밀번호를 잊으셨나요?
-        </Link>
         {state.status === "API_ERROR" && (
           <p className="md-medium mt-4 text-danger">{state.message}</p>
         )}
@@ -73,16 +101,16 @@ export default function LoginForm() {
           disabled={!form.formState.isValid}
           type="submit"
         >
-          로그인
+          회원가입
         </Button>
       </form>
       <div className="mt-4 space-x-2">
-        <span>아직 계정이 없으신가요?</span>
+        <span>이미 회원이신가요?</span>
         <Link
           href="/signup"
           className="self-end text-link-light underline underline-offset-1"
         >
-          가입하기
+          로그인하러 가기
         </Link>
       </div>
     </FormProvider>
