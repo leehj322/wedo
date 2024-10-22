@@ -16,9 +16,20 @@ export default function TeamTaskListCard({ taskList }: TeamTaskListCardProps) {
   const isCompletedTaskList =
     totalTaskCount && doneTaskCount === totalTaskCount;
 
+  // 할 일 목록의 color 값을 바꿔주는 함수
+  // 로직은 이후에 다른 방식으로 변경할 수 있을듯
+  const taskListColorStylePicker = (id: number) => {
+    const COLOR_LIST = ["#a855f7", "#3b82f6", "#5fe8ff", "#ec4899"];
+
+    return { backgroundColor: COLOR_LIST[id % 4] };
+  };
+
   return (
     <div className="relative flex">
-      <div className="h-10 w-3 shrink-0 rounded-l-[10px] bg-[#a855f7]" />
+      <div
+        className="h-10 w-3 shrink-0 rounded-l-[10px]"
+        style={taskListColorStylePicker(taskList.id)}
+      />
       <div className="md-medium flex h-10 w-full min-w-0 items-center justify-between rounded-r-[10px] bg-dropDown-default pl-3 pr-2 text-default-light">
         <p className="truncate pr-2">{taskList.name}</p>
         <div className="flex shrink-0 items-center">
