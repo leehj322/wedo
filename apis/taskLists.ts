@@ -1,4 +1,4 @@
-import { AddTaskListResponse } from "@/dtos/TaskLists";
+import { AddTaskListResponse, EditTaskListResponse } from "@/dtos/TaskLists";
 
 import fetchExtended from "./fetchExtended";
 
@@ -13,6 +13,31 @@ export async function addTaskList({
     method: "POST",
     body: JSON.stringify({ name: taskListName }),
   });
+  const json = await res.json();
+
+  if (!res.ok) {
+    throw new Error(json.message);
+  }
+
+  return json;
+}
+
+export async function editTaskList({
+  groupId,
+  taskListId,
+  taskListName,
+}: {
+  groupId: number;
+  taskListId: number;
+  taskListName: string;
+}): Promise<EditTaskListResponse> {
+  const res = await fetchExtended(
+    `/groups/${groupId}/task-lists/${taskListId}`,
+    {
+      method: "PATCH",
+      body: JSON.stringify({ name: taskListName }),
+    },
+  );
   const json = await res.json();
 
   if (!res.ok) {

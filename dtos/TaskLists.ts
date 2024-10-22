@@ -5,3 +5,7 @@ export interface AddTaskListResponse {
   updatedAt: string;
   displayIndex: number;
 }
+
+export interface EditTaskListResponse extends AddTaskListResponse {
+  groupId: number;
+}

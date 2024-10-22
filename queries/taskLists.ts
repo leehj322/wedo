@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { addTaskList, delTaskList } from "@/apis/taskLists";
+import { addTaskList, delTaskList, editTaskList } from "@/apis/taskLists";
 
 export function useAddTaskList() {
   return useMutation({
@@ -11,6 +11,20 @@ export function useAddTaskList() {
       groupId: number;
       taskListName: string;
     }) => addTaskList({ groupId, taskListName }),
+  });
+}
+
+export function useEditTaskList() {
+  return useMutation({
+    mutationFn: ({
+      groupId,
+      taskListId,
+      taskListName,
+    }: {
+      groupId: number;
+      taskListId: number;
+      taskListName: string;
+    }) => editTaskList({ groupId, taskListId, taskListName }),
   });
 }
 
