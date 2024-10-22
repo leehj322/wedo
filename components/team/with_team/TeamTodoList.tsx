@@ -30,7 +30,12 @@ export default function TeamTodoList({ isAdmin, groupId }: TeamTodoListProps) {
       {numberOfTaskLists ? (
         <div className="flex flex-col gap-4">
           {taskLists.map((taskList) => (
-            <TeamTaskListCard key={taskList.id} taskList={taskList} />
+            <TeamTaskListCard
+              key={taskList.id}
+              taskList={taskList}
+              isAdmin={isAdmin}
+              groupId={groupId}
+            />
           ))}
         </div>
       ) : (
