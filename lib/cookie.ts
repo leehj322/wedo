@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function getServerCookie(key: string) {
   const cookieStore = cookies();
@@ -11,4 +12,14 @@ export async function getServerCookie(key: string) {
 export async function setServerCookie<T extends string>(key: string, value: T) {
   const cookieStore = cookies();
   cookieStore.set(key, value);
+}
+
+export async function deleteToken() {
+  await fetch(`${process.env.NEXT_PUBLIC_DEPLOY_URL}/api/user`, {
+    method: "DELETE",
+  });
+  const cookieStore = cookies();
+  cookieStore.delete("accessToken");
+  cookieStore.delete("refreshToken");
+  redirect("/");
 }

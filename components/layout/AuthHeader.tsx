@@ -3,6 +3,7 @@ import Image from "next/image";
 import { getUser } from "@/apis/user";
 import UserDropDown from "@/components/@common/dropdown/UserDropDown";
 import GroupsResponsive from "@/layout/groups/GroupsResponsive";
+import { deleteToken } from "@/lib/cookie";
 import { Avatar, AvatarFallback, AvatarImage } from "@/ui/avatar";
 
 export default async function AuthHeader() {
@@ -14,6 +15,8 @@ export default async function AuthHeader() {
       <UserDropDown
         actionSignOut={async () => {
           "use server";
+
+          await deleteToken();
         }}
       >
         <div className="flex grow items-center justify-end gap-[10px] tab:grow-0">
