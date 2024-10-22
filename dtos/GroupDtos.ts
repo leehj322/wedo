@@ -1,3 +1,5 @@
+import { TaskList } from "./TaskLists";
+
 export type GenerateInviteTokenResponse = string;
 
 export interface AcceptInvitationResponse {
@@ -13,16 +15,6 @@ export interface Member {
   userId: number;
 }
 
-interface Task {
-  displayIndex: number;
-  groupId: number;
-  updatedAt: string;
-  createdAt: string;
-  name: string;
-  id: number;
-  tasks: string[];
-}
-
 export interface GetTeamResponse {
   teamId: string;
   updatedAt: string;
@@ -31,7 +23,7 @@ export interface GetTeamResponse {
   name: string;
   id: number;
   members: Member[];
-  taskLists: Task[];
+  taskLists: TaskList[];
 }
 
 export interface AddTeamResponse {
