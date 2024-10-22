@@ -1,8 +1,13 @@
 "use server";
 
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
+import { PatchUserRequestBody } from "@/dtos/UserDtos";
+
 import { postSignIn, postSignUp } from "./auth";
+import { uploadImage } from "./image";
+import { getUser, patchUser, patchUserPassword } from "./user";
 
 export type State = {
   status: string;
@@ -51,6 +56,43 @@ export async function actionSignIn(
     if (error instanceof Error)
       return { status: "API_ERROR", message: error.message };
     throw new Error("unknown");
+  }
+  return { status: "SUCCESS" };
+}
+
+export async function actionEditProfile(prevState: State, formData: FormData) {
+  try {
+    const { nickname } = await getUser();
+    const imageFile = formData.get("image") as File;
+    const nicknameData = formData.get("nickname") as string;
+    const body: PatchUserRequestBody = {};
+    if (imageFile.size !== 0 && imageFile.name !== undefined) {
+      const { url } = await uploadImage(imageFile);
+      body.image = url;
+    }
+    if (nickname !== nicknameData) {
+      body.nickname = nicknameData;
+    }
+    if (Object.entries(body).length > 0) await patchUser(body);
+    else return { status: "SAME_AS_BEFORE" };
+  } catch (err) {
+    if (err instanceof Error)
+      return { status: "API_ERROR", message: err.message };
+    throw new Error("profile edit unknown error");
+  }
+  revalidateTag("getUser");
+  return { status: "SUCCESS" };
+}
+
+export async function actionEditPassword(prevState: State, formData: FormData) {
+  try {
+    const password = formData.get("password") as string;
+    const passwordConfirmation = formData.get("passwordConfirmation") as string;
+    await patchUserPassword({ password, passwordConfirmation });
+  } catch (err) {
+    if (err instanceof Error)
+      return { status: "API_ERROR", message: err.message };
+    throw new Error("profile edit unknown error");
   }
   return { status: "SUCCESS" };
 }

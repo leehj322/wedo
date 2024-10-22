@@ -8,6 +8,7 @@ import {
 import Image from "next/image";
 
 import Input from "@/@common/Input";
+import { cn } from "@/lib/utils";
 import VisibleOffIcon from "@/public/images/visibility_off.png";
 import VisibleOnIcon from "@/public/images/visibility_on.png";
 import {
@@ -27,10 +28,14 @@ export function InputField<T extends FieldValues>({
   label,
   type,
   placeholder,
+  disabled,
+  className,
   hasVisibleTrigger = false,
   ...field
 }: InputFieldProps & Omit<ControllerRenderProps<T>, "ref">) {
-  const [isVisible, setIsVisible] = useState(!hasVisibleTrigger);
+  const [isVisible, setIsVisible] = useState(
+    !hasVisibleTrigger && type !== "password",
+  );
 
   return (
     <div className="space-y-2">
@@ -38,9 +43,13 @@ export function InputField<T extends FieldValues>({
         <FormLabel className="!lg-medium">{label}</FormLabel>
         <FormControl>
           <Input
-            className="bg-white"
+            className={cn(
+              "bg-white disabled:border-0 disabled:bg-gray-200",
+              className,
+            )}
             type={!isVisible ? type : "text"}
             placeholder={placeholder}
+            disabled={disabled}
             {...field}
           />
         </FormControl>
@@ -76,8 +85,10 @@ export function InputField<T extends FieldValues>({
 
 export default function FormProviderField<T extends FieldValues>({
   label,
+  className,
   type,
   placeholder,
+  disabled = false,
   hasVisibleTrigger = false,
   ...props
 }: InputFieldProps & UseControllerProps<T>) {
@@ -90,6 +101,8 @@ export default function FormProviderField<T extends FieldValues>({
           label={label}
           type={type}
           placeholder={placeholder}
+          disabled={disabled}
+          className={className}
           hasVisibleTrigger={hasVisibleTrigger}
           {...rest}
         />
