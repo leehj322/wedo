@@ -2,6 +2,7 @@
 
 import { useGetTeam } from "@/queries/group";
 
+import TeamTaskListAddModalButton from "./TeamTaskListAddModalButton";
 import TeamTaskListCard from "./TeamTaskListCard";
 
 interface TeamTodoListProps {
@@ -24,11 +25,7 @@ export default function TeamTodoList({ isAdmin, groupId }: TeamTodoListProps) {
             {`(${numberOfTaskLists}개)`}
           </span>
         </div>
-        {isAdmin && (
-          <button className="md-medium text-brand-active">
-            + 새로운 목록 추가하기
-          </button>
-        )}
+        {isAdmin && <TeamTaskListAddModalButton groupId={groupId} />}
       </h2>
       {numberOfTaskLists ? (
         <div className="flex flex-col gap-4">
