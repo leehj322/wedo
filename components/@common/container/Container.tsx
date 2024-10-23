@@ -1,19 +1,36 @@
 import { ReactNode } from "react";
 
-interface ContainerProps {
+import { cva, VariantProps } from "class-variance-authority";
+
+import { cn } from "@/lib/utils";
+
+const variant = cva("min-h-screen pt-[60px]", {
+  variants: {
+    background: {
+      white: "bg-inverse",
+      lightBeige: "bg-primary-light",
+    },
+  },
+});
+
+type Prop = VariantProps<typeof variant> & {
+  className?: string;
   children: ReactNode;
-  background: "white" | "lightBeige";
-}
+};
 
-export default function Container({ children, background }: ContainerProps) {
-  const backgroundClass =
-    background === "white" ? "bg-inverse" : "bg-primary-light";
-
+export default function Container({ className, children, background }: Prop) {
   return (
-    <div className={`min-h-[100vh] ${backgroundClass}`}>
-      <section className="mx-auto w-full max-w-[1200px] pt-[60px]">
-        <div className="px-4 tab:px-6 pc:px-0">{children}</div>
-      </section>
-    </div>
+    <main className={cn(variant({ background }))}>
+      <div
+        className={cn([
+          "mx-auto",
+          "max-w-screen-pc",
+          "px-4 tab:px-6 pc:px-0",
+          className,
+        ])}
+      >
+        {children}
+      </div>
+    </main>
   );
 }
