@@ -22,7 +22,12 @@ export default function Container({ className, children, background }: Prop) {
   return (
     <main className={cn(variant({ background }))}>
       <div
-        className={`mx-auto max-w-screen-pc px-4 tab:px-6 pc:px-0${className ? ` ${className}` : ""}`}
+        className={cn([
+          "mx-auto",
+          "max-w-screen-pc",
+          "px-4 tab:px-6 pc:px-0",
+          className,
+        ])}
       >
         {children}
       </div>
