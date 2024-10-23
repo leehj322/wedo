@@ -13,6 +13,5 @@ export async function GET(req: Request) {
   const cookieStore = cookies();
   cookieStore.set("accessToken", loginRes.accessToken);
   cookieStore.set("refreshToken", loginRes.refreshToken);
-  cookieStore.set("user", JSON.stringify(loginRes.user));
   redirect("/");
 }

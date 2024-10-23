@@ -93,9 +93,7 @@ export const fetchExtendedForm = returnFetch({
       const timeRemaining =
         jwtDecode(accessToken).exp! - Math.floor(new Date().getTime() / 1000);
 
-      if (timeRemaining <= 0) {
-        accessToken = await refreshAccessToken();
-      }
+      if (timeRemaining <= 0) accessToken = await refreshAccessToken();
 
       const { headers } = args[1];
       const headerInit: HeadersInit = new Headers(headers);

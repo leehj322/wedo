@@ -10,6 +10,7 @@ const variant = cva(
     "rounded-xl border border-solid border-primary hover:border-brand-border focus:border-brand-border",
     "p-4",
     "text-default-light placeholder:text-placeHolder",
+    "disabled:border-0",
   ],
   {
     variants: {

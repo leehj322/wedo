@@ -29,3 +29,8 @@ export interface UserResponse {
   id: number;
   memberships: UserMembershipsResponse[];
 }
+
+export interface PatchUserRequestBody {
+  nickname?: string;
+  image?: string;
+}

@@ -2,16 +2,18 @@
   "prettier.requireConfig": true,
   "prettier.configPath": "./.prettierrc.json",
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  //"editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
   "cSpell.words": [
     "addteam",
     "Dtos",
+    "googleusercontent",
     "hookform",
     "jointeam",
     "Kakao",
+    "kakaocdn",
     "nextauth",
     "querys",
     "signin",
@@ -22,5 +24,11 @@
   ],
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
-  ]
+  ],
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  }
 }
