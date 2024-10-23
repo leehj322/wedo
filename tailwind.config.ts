@@ -43,11 +43,6 @@ const config: Config = {
         tab: "744px",
         pc: "1200px",
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
       colors: {
         gray: {
           "500": "#D9D9D9",
