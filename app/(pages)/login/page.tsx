@@ -4,14 +4,14 @@ import OAuthLink from "@/components/auth/login/OAuthLink";
 import GoogleIcon from "@/public/images/google.png";
 import KakaoIcon from "@/public/images/kakao.png";
 
-export const GOOGLE_OAUTH_PARAMS = {
+const GOOGLE_OAUTH_PARAMS = {
   client_id: process.env.GOOGLE_CLIENT_ID!,
   redirect_uri: process.env.GOOGLE_REDIRECT_URI!,
   response_type: "code",
   scope: "openid profile email",
 };
 
-export const KAKAO_OAUTH_PARAMS = {
+const KAKAO_OAUTH_PARAMS = {
   client_id: process.env.KAKAO_CLIENT_ID!,
   redirect_uri: process.env.KAKAO_REDIRECT_URI!,
   response_type: "code",
@@ -33,14 +33,14 @@ export default function LoginPage() {
             icon={GoogleIcon}
             href={`https://accounts.google.com/o/oauth2/v2/auth?${google}`}
           >
-            Google 게정으로 로그인
+            Google 계정으로 로그인
           </OAuthLink>
           <OAuthLink
             alt="카카오 로그인"
             icon={KakaoIcon}
             href={`https://kauth.kakao.com/oauth/authorize?${kakao}`}
           >
-            카카오 게정으로 로그인
+            카카오 계정으로 로그인
           </OAuthLink>
         </div>
       </div>
